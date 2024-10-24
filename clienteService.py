@@ -4,6 +4,8 @@ clientes = [
   {"id": 3, "nome": "Catarina"}
 ]
 
+
+
 class Cliente:
   TODOS = "TODOS"
   SAIR = "SAIR"
