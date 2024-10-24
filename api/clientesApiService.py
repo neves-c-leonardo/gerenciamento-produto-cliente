@@ -10,9 +10,8 @@ class ClientesApiService:
         response = requests.get(url)
 
         if response.status_code == 200:
-            users = response.json()
-            print(users)
-            return
+            clientes = response.json()
+            return clientes
         else:
             print('Erro ao acssar a API:', response.status_code)
 
@@ -25,19 +24,17 @@ class ClientesApiService:
         elif nome is not None:
             response = requests.get(f"{url}?nome={nome}")
         else:
-            self.buscarClientes()
-            return
+            return self.buscarClientes()
 
         if response.status_code == 200:
-            users = response.json()
-            print(users)
-            return
+            cliente = response.json()
+            return cliente
         else:
             print('Erro ao acssar a API:', response.status_code)
 
     # Post sendo enviado o body JSON
-    def adicionarCliente(self, nome, cpf):
-        novo_cliente = {"nome": nome, "cpf": cpf}
+    def adicionarCliente(self, nome, cpf, endereco):
+        novo_cliente = {"nome": nome, "cpf": cpf, "endereco": endereco}
         response = requests.post(url, json=novo_cliente)
 
         if response.status_code == 201:
@@ -68,5 +65,13 @@ class ClientesApiService:
         else:
             print('Erro ao remover o cliente:', response.status_code)
 
-servico = ClientesApiService()
-servico.removerCliente("8eb7")
+    # Put sendo enviado com body JSON
+    def inserirEnderecoCliente(self, id, endereco):
+        cliente_atualizado = { "endereco": endereco }
+
+        response = requests.put(f"{url}/{id}", json=cliente_atualizado )
+
+        if response.status_code == 200:
+            print(f"Endereço do cliente inserido com sucesso!")
+        else:
+            print('Erro ao inserir endereço cliente:', response.status_code)
